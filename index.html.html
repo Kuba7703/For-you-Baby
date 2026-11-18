@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wszystkiego Najlepszego, Kochanie! 💖</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Sniglet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sniglet:wght@400;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sniglet: ['Sniglet', 'cursive', 'sans-serif'],
+                    },
+                    colors: {
+                        pastelPurple: '#d8b4fe',
+                        pastelPink: '#fbcfe8',
+                        pastelBlue: '#bae6fd',
+                        softDark: '#1e1b2e',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Sniglet', cursive, sans-serif;
+            background: linear-gradient(135deg, #fbcfe8 0%, #d8b4fe 50%, #bae6fd 100%);
+            min-height: 100vh;
+            color: #2d2b38;
+            overflow-x: hidden;
+        }
+        /* Floating hearts background animation */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+        .floating-heart {
+            position: fixed;
+            color: rgba(236, 72, 153, 0.4);
+            animation: floatUp 6s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .gift-card {
+            transition: all 0.3s ease;
+        }
+        .gift-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(216, 180, 254, 0.5);
+        }
+    </style>
+</head>
+<body class="relative selection:bg-pink-300 selection:text-pink-900">
+
+    <!-- Floating Background Particles Container -->
+    <div id="particles-container"></div>
+
+    <!-- EKRAN POWITALNY (Welcome Screen) -->
+    <section id="welcome-screen" class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative z-10">
+        <div class="bg-white/70 backdrop-blur-md p-8 sm:p-12 rounded-3xl shadow-2xl border border-white/50 max-w-lg w-full transform transition-all hover:scale-[1.01]">
+            <div class="text-6xl sm:text-7xl mb-6 text-pink-500 animate-bounce">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+            <span class="inline-block bg-pink-100 text-pink-700 px-4 py-1.5 rounded-full text-sm font-bold mb-4 tracking-wide">
+                23.11 • Wyjątkowy Dzień 🌸
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-softDark mb-4 leading-tight">
+                Wszystkiego najlepszego, Kochanie!
+            </h1>
+            <p class="text-gray-600 mb-8 text-base sm:text-lg">
+                Przygotowałem dla Ciebie coś wyjątkowego, Krewetka. Kliknij poniżej, aby otworzyć swoją niespodziankę! ✨
+            </p>
+            <button onclick="revealSurprise()" class="w-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white font-extrabold text-lg py-4 px-8 rounded-2xl shadow-lg transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3">
+                <span>Otwórz swoją niespodziankę</span>
+                <i class="fa-solid fa-heart text-white animate-pulse"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- GŁÓWNA TREŚĆ (Main Content - Hidden initially) -->
+    <main id="main-content" class="hidden min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative z-10 max-w-5xl mx-auto space-y-12">
+        
+        <!-- NAGŁÓWEK SEKCJAMI -->
+        <div class="text-center">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-softDark tracking-tight mb-2">
+                Dla Mojej Cudownej Dziewczyny 💖
+            </h2>
+            <p class="text-gray-700 text-lg">Wszystkiego najlepszego z okazji 21. urodzin!</p>
+
+            <!-- LICZNIK CZASU ZWIĄZKU -->
+        <section class="mt-8 bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-xl border border-white/60 text-center relative overflow-hidden">
+            <h3 class="text-xl sm:text-2xl font-extrabold text-softDark mb-4 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-heart text-pink-500 animate-pulse"></i>
+                <span>Jesteśmy razem już:</span>
+            </h3>
+            <div id="love-counter" class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-softDark">
+                <div class="bg-pink-50 p-4 rounded-2xl border border-pink-100">
+                    <span id="days" class="block text-3xl sm:text-4xl font-black text-pink-600">0</span>
+                    <span class="text-xs sm:text-sm font-bold text-gray-500">dni</span>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-2xl border border-purple-100">
+                    <span id="hours" class="block text-3xl sm:text-4xl font-black text-purple-600">0</span>
+                    <span class="text-xs sm:text-sm font-bold text-gray-500">godzin</span>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                    <span id="minutes" class="block text-3xl sm:text-4xl font-black text-blue-600">0</span>
+                    <span class="text-xs sm:text-sm font-bold text-gray-500">minut</span>
+                </div>
+                <div class="bg-pink-50 p-4 rounded-2xl border border-pink-100">
+                    <span id="seconds" class="block text-3xl sm:text-4xl font-black text-pink-500">0</span>
+                    <span class="text-xs sm:text-sm font-bold text-gray-500">sekund</span>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <!-- OSOBISTE ŻYCZENIA (Personal Wishes Section) -->
+        <section class="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-10 shadow-xl border border-white/60 relative overflow-hidden">
+            <div class="absolute -left-3 -bottom-3 text-pink-100 text-9xl pointer-events-none select-none">
+                <i class="fa-solid fa-face-laugh-squint"></i>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-softDark mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-envelope-open-text text-pink-500"></i>
+                <span>Moja najdroższa,</span>
+            </h3>
+            
+            <div class="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed relative z-10">
+                <p>
+                    W dniu Twoich urodzin życzę Ci dokładnie tego, co najpiękniejsze – mnóstwa uśmiechu, spokoju i spełnienia najskrytszych marzeń, żebyś zdobyła każdy magnes jakiego pragniesz, jak największej ilości aksolotli w akwarium.
+                </p>
+                <p>
+                    Chcę Ci też po prostu z całego serca podziękować. Przy Tobie czuję się niesamowicie bezpiecznie i komfortowo, a to dla mnie absolutnie najważniejsze i bezcenne.
+                </p>
+                <p class="font-bold text-pink-600 bg-pink-50 p-4 rounded-2xl border border-pink-100">
+                    Kocham cię bardzo, dla Ciebie sikałbym nawet do ubikacji! 🚽💕
+                </p>
+                <p>
+                    Bądź zawsze sobą, bo jesteś wyjątkowa. Ciesz się tym dniem, a ja postaram się, żeby był najpiękniejszy.
+                </p>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                <div class="text-left">
+                    <p class="text-sm text-gray-500 font-medium">Twój podpis:</p>
+                    <p class="text-xl font-extrabold text-purple-600">Twój Kubuś</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREZENTY Z NUMERAMI (Gifts Section) -->
+        <section class="space-y-6">
+            <div class="text-center">
+                <h3 class="text-3xl font-extrabold text-softDark mb-2 flex items-center justify-center gap-3">
+                    <span>Twoje prezenty czekają 🎁</span>
+                </h3>
+                <p class="text-gray-600 text-sm sm:text-base">Kliknij na kartę prezentu, aby odkryć niespodziankę i wskazówkę!</p>
+            </div>
+
+            <!-- Poprawiona siatka na 4 kolumny (odpowiedzialna za ładne wyświetlanie 4 prezentów obok siebie) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Gift Card 01 -->
+                <div class="gift-card bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-lg border border-white/60 cursor-pointer flex flex-col justify-between" onclick="toggleGift(1)">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-3xl font-black text-pink-500 bg-pink-50 px-4 py-1 rounded-2xl">01</span>
+                            <i class="fa-solid fa-heart text-pink-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-softDark mb-2">Prezent 1</h4>
+                        <p class="text-gray-500 text-sm">Kliknij, aby odkryć szczegóły...</p>
+                    </div>
+                    <div id="gift-details-1" class="hidden mt-4 pt-4 border-t border-gray-100 text-gray-700 text-sm animate-fadeIn">
+                        <p class="bg-purple-50 p-3 rounded-xl text-purple-900 font-medium">
+                            ✨ <strong>Wskazówka: Na wspólne cudowne chwile.</strong> 
+                        </p>
+                    </div>
+                    <div class="mt-4 text-xs text-pink-600 font-bold flex items-center gap-1">
+                        <span class="click-text-1">Rozwiąż wstążkę</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Gift Card 02 -->
+                <div class="gift-card bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-lg border border-white/60 cursor-pointer flex flex-col justify-between" onclick="toggleGift(2)">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-3xl font-black text-pink-500 bg-pink-50 px-4 py-1 rounded-2xl">02</span>
+                            <i class="fa-solid fa-star text-yellow-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-softDark mb-2">Prezent 2</h4>
+                        <p class="text-gray-500 text-sm">Kliknij, aby odkryć szczegóły...</p>
+                    </div>
+                    <div id="gift-details-2" class="hidden mt-4 pt-4 border-t border-gray-100 text-gray-700 text-sm animate-fadeIn">
+                        <p class="bg-purple-50 p-3 rounded-xl text-purple-900 font-medium">
+                            ✨ <strong>Wskazówka: Mały upominek dla mojej cudownej dziewczyny, mam nadzieję że z tym będziesz czuć się wyjątkowo.</strong> 
+                        </p>
+                    </div>
+                    <div class="mt-4 text-xs text-pink-600 font-bold flex items-center gap-1">
+                        <span class="click-text-2">Rozwiąż wstążkę</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Gift Card 03 -->
+                <div class="gift-card bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-lg border border-white/60 cursor-pointer flex flex-col justify-between" onclick="toggleGift(3)">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-3xl font-black text-pink-500 bg-pink-50 px-4 py-1 rounded-2xl">03</span>
+                            <i class="fa-solid fa-heart text-pink-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-softDark mb-2">Prezent 3</h4>
+                        <p class="text-gray-500 text-sm">Kliknij, aby odkryć szczegóły...</p>
+                    </div>
+                    <div id="gift-details-3" class="hidden mt-4 pt-4 border-t border-gray-100 text-gray-700 text-sm animate-fadeIn">
+                        <p class="bg-purple-50 p-3 rounded-xl text-purple-900 font-medium">
+                            ✨ <strong>Wskazówka: Z tym ciężkie i długie podróże będą łatwiejsze.</strong> 
+                        </p>
+                    </div>
+                    <div class="mt-4 text-xs text-pink-600 font-bold flex items-center gap-1">
+                        <span class="click-text-3">Rozwiąż wstążkę</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Gift Card 04 (Naprawiona i poprawnie oznaczona jako numer 4) -->
+                <div class="gift-card bg-white/80 backdrop-blur-md rounded-3xl p-6 shadow-lg border border-white/60 cursor-pointer flex flex-col justify-between" onclick="toggleGift(4)">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-3xl font-black text-pink-500 bg-pink-50 px-4 py-1 rounded-2xl">04</span>
+                            <i class="fa-solid fa-gift text-pink-400 text-xl"></i>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-softDark mb-2">Prezent 4</h4>
+                        <p class="text-gray-500 text-sm">Kliknij, aby odkryć szczegóły...</p>
+                    </div>
+                    <div id="gift-details-4" class="hidden mt-4 pt-4 border-t border-gray-100 text-gray-700 text-sm animate-fadeIn">
+                        <p class="bg-purple-50 p-3 rounded-xl text-purple-900 font-medium">
+                            ✨ <strong>Wskazówka: Na słodkie poranki i miłe popołudnia.</strong> 
+                        </p>
+                    </div>
+                    <div class="mt-4 text-xs text-pink-600 font-bold flex items-center gap-1">
+                        <span class="click-text-4">Rozwiąż wstążkę</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DODATKOWA SEKCJA: MINIGIERKA -->
+        <section class="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-10 shadow-xl border border-white/60 text-center relative overflow-hidden">
+            <div id="love-game">
+                <span class="inline-block bg-pink-100 text-pink-700 px-4 py-1.5 rounded-full text-sm font-bold mb-4 tracking-wide">
+                    🎮 Tajna Minigierka 
+                </span>
+                <h3 id="question-text" class="text-2xl sm:text-3xl font-extrabold text-softDark mb-6">
+                    Czy kochasz mnie najmocniej na świecie? 🥰
+                </h3>
+                
+                <div id="buttons-container" class="relative h-32 flex justify-center items-center gap-6 max-w-sm mx-auto">
+                    <!-- Przycisk TAK -->
+                    <button onclick="sayYes()" class="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white font-extrabold text-lg py-3 px-8 rounded-2xl shadow-lg transition-all duration-200 transform hover:scale-105 active:scale-95 cursor-pointer z-10">
+                        TAK! ❤️
+                    </button>
+                    
+                    <!-- Przycisk NIE (uciekinier) -->
+                    <button id="no-btn" class="bg-gray-200 text-gray-600 font-bold text-lg py-3 px-8 rounded-2xl shadow-md cursor-pointer absolute transition-all duration-150" style="left: 60%; top: 50%; transform: translateY(-50%);">
+                        Nie 🙄
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STOPKA (Footer) -->
+        <footer class="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white/60 text-center space-y-3">
+            <p class="text-lg sm:text-xl font-bold text-softDark">
+                Mam nadzieję, że ten dzień będzie tak wyjątkowy, jak Ty. 💜
+            </p>
+            <p class="text-purple-600 font-extrabold text-base">
+                Z miłością, twój aniołek
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        // Generate floating background hearts
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const icons = ['fa-heart', 'fa-star', 'fa-sparkles', 'fa-paw'];
+            for (let i = 0; i < 20; i++) {
+                const el = document.createElement('div');
+                el.className = 'floating-heart';
+                el.innerHTML = `<i class="fa-solid ${icons[Math.floor(Math.random() * icons.length)]}"></i>`;
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+                el.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                el.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(el);
+            }
+        }
+        createParticles();
+
+        // Reveal surprise action
+        function revealSurprise() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const mainContent = document.getElementById('main-content');
+            
+            welcomeScreen.style.opacity = '0';
+            welcomeScreen.style.transform = 'scale(0.95)';
+            welcomeScreen.style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        // Toggle gift card details
+        function toggleGift(id) {
+            const details = document.getElementById(`gift-details-${id}`);
+            const clickText = document.querySelector(`.click-text-${id}`);
+            
+            if (details.classList.contains('hidden')) {
+                details.classList.remove('hidden');
+                clickText.textContent = 'Ukryj szczegóły';
+            } else {
+                details.classList.add('hidden');
+                clickText.textContent = 'Rozwiąż wstążkę';
+            }
+        }
+
+        // --- LICZNIK CZASU ZWIĄZKU ---
+        const startDate = new Date('2026-08-29T12:15:00'); 
+
+        function updateCounter() {
+            const now = new Date();
+            const difference = now - startDate;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((difference / 1000 / 60) % 60);
+                const seconds = Math.floor((difference / 1000) % 60);
+
+                document.getElementById('days').innerText = days;
+                document.getElementById('hours').innerText = hours;
+                document.getElementById('minutes').innerText = minutes;
+                document.getElementById('seconds').innerText = seconds;
+            }
+        }
+
+        setInterval(updateCounter, 1000);
+        updateCounter();
+    </script>
+
+   <script> 
+        // Logika dla uciekającego przycisku "Nie"
+        const noBtn = document.getElementById('no-btn');
+        const buttonsContainer = document.getElementById('buttons-container');
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        function moveButton() {
+            const containerRect = buttonsContainer.getBoundingClientRect();
+            const randomX = Math.floor(Math.random() * (containerRect.width - 120));
+            const randomY = Math.floor(Math.random() * (containerRect.height - 60));
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transform = 'none';
+        }
+
+        function sayYes() {
+            const container = document.getElementById('love-game');
+            container.innerHTML = `
+                <div class="py-6 animate-fadeIn">
+                    <h3 class="text-3xl font-extrabold text-pink-500 mb-3">Wiedziałem! 🥰🎉</h3>
+                    <p class="text-lg text-gray-700">Najlepsza odpowiedź na świecie, Krewetka! Otrzymujesz oficjalny buziak i odblokowujesz całe moje serce! 💋</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
